@@ -1,0 +1,16 @@
+{
+  "name": "jsdefender-deobfuscator",
+  "version": "1.0.0",
+  "description": "A simple algorithm to reconstruct an obfuscated program with JSDefender",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yvain",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^20.1.0",
+    "fs": "^0.0.1-security",
+    "js-beautify": "^1.14.6"
+  }
+}
