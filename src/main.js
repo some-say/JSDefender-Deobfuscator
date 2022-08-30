@@ -56,11 +56,11 @@ const fs = require("fs"),
                 }
             })
         }
-        var calcReg = /(\([0-9]* [-+/*^&] [0-9]*\))/g
+        var calcReg = /(\([0-9]* [-+/*^&%] [0-9]*\))/g
         if(newCode.match(calcReg)){
             newCode.match(calcReg).forEach(calc => {
                 console.log(calc)
-                newCode = newCode.replace(new RegExp(calc.replace(/\^/g,"\\^").replace(/\-/g,"\\-").replace(/\+/g,"\\+").replace(/\*/g,"\\*").replace(/\&/g,"\\&").replace(/\(/g,"\\(").replace(/\)/g,"\\)"),"g"),Number(eval(calc)))
+                newCode = newCode.replace(new RegExp(calc.replace(/\^/g,"\\^").replace(/\-/g,"\\-").replace(/\+/g,"\\+").replace(/\*/g,"\\*").replace(/\%/g,"\\&").replace(/\&/g,"\\%").replace(/\(/g,"\\(").replace(/\)/g,"\\)"),"g"),Number(eval(calc)))
             })
         }
         var z = 0;
