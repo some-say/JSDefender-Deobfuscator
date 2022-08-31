@@ -144,7 +144,7 @@ si on met cette partie qui est exécutée en clair on obtient :
 })("CRYPTED")
 ```
 
-* `IM3D` : c'est la fonction principale celle qui permet de déchiffrer "CRYPTED"
+* `IM3D` : c'est la fonction principale celle qui contient les fonctions `LhVt` et `D9hu` et qui permet d'exécuter le programme déchiffré
 * `LhVt` : c'est une fonction de hashage (non sécurisée)
 * `D9hu` : c'est une fonction XOR permettant de déchiffrer "CRYPTED"
 
