@@ -13,7 +13,7 @@
         <span>
             <h1>JSDefender Deobfuscator</h1>
             <textarea cols=100 id=input rows=11 ondrop="dropHandler(event)" ondragover="dragOverHandler(event)"></textarea></br>
-            <button id=button onclick="deobfuscate()">Deobfuscate !</button></br>
+            <button id=button onclick="deobfuscate(document.getElementById('input').value)">Deobfuscate !</button></br>
             <textarea cols=100 id=output readonly rows=11></textarea>
         </span>
     </center>

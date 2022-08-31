@@ -1,13 +1,14 @@
 const fs = require("fs"),
     bf = require("js-beautify"),
     champiName = require("../name.json")
-    deobfuscate = () => {
-        var code = bf(document.getElementById("input").value, {
+    deobfuscate = (input) => {
+        var code = bf(input, {
                 indent_size: 2,
                 space_in_empty_paren: true
             }),
-            line = code.replace(/\r/gi, "").split("\n"),
-            name = line[0].split("let ").reverse().join("").split(";").reverse().join(""),
+            line = code.replace(/\r/gi, "").split("\n");
+        for(let i=0;i<line.length;i++) if(line[i].startsWith("//")) line.splice(i,1)
+        var name = line[0].split("let ").reverse().join("").split(";").reverse().join(""),
             funcA = line[1] + "\n" + line[2] + "\n" + line[3] + "\n" + line[4] + "\n",
             val = /([A-Za-z0-9]*\.[A-Za-z0-9]*\([0-9]*\))/g,
             clearV = /(([A-Za-z0-9]+|\))\[\"([0-9A-Za-z_]*)\"\])/g,
@@ -34,20 +35,23 @@ const fs = require("fs"),
         varF.forEach(str => {
             newCode = newCode.replace(new RegExp(str, "gi"), varN["" + str]);
         })
-        code.match(val).forEach(value => {
-            if (value.startsWith(name)) {
-                allF.push("\"" + value + "\"")
-            }
-        })
-        allV = eval(line[0] + "\n" + funcA + "var xD = {};\nvar allF = [" + allF + "];\nallF.forEach(val => {xD[\"\"+val]=eval(val)});\nxD")
-        allF.forEach(v => {
-            if (typeof allV["" + v] == "number" | "boolean") {
-                newCode = newCode.replace(v, allV["" + v])
-            } else if (typeof allV["" + v] == "string") {
-                var newVal = allV["" + v].replace(/\\/g, "\\\\").replace(/\"/g, "\\\"").replace(/\r/gi, "").split("\n").join("\\n")
-                newCode = newCode.replace(v, '"' + newVal + '"')
-            }
-        })
+        function replaceVal(obfuscated){
+            if(obfuscated.match(val))
+            obfuscated.match(val).forEach(value => {
+                if (value.startsWith(name)) {
+                    allF.push("\"" + value + "\"")
+                }
+            })
+            allV = eval(line[0] + "\n" + funcA + "var xD = {};\nvar allF = [" + allF + "];\nallF.forEach(val => {xD[\"\"+val]=eval(val)});\nxD")
+            allF.forEach(v => {
+                if (typeof allV["" + v] == "number" | "boolean") {
+                    newCode = newCode.replace(v, allV["" + v])
+                } else if (typeof allV["" + v] == "string") {
+                    var newVal = allV["" + v].replace(/\\/g, "\\\\").replace(/\"/g, "\\\"").replace(/\r/gi, "").split("\n").join("\\n")
+                    newCode = newCode.replace(v, '"' + newVal + '"')
+                }
+            })
+        }(code)
         var numberReg = /((0x|0X)[0-9A-Fa-f]*)|((0o|0O)[0-7]*)/g
         if(newCode.match(numberReg)){
             newCode.match(numberReg).forEach(int => {
@@ -59,25 +63,39 @@ const fs = require("fs"),
         var calcReg = /(\([0-9]* [-+/*^&%] [0-9]*\))/g
         if(newCode.match(calcReg)){
             newCode.match(calcReg).forEach(calc => {
-                console.log(calc)
                 newCode = newCode.replace(new RegExp(calc.replace(/\^/g,"\\^").replace(/\-/g,"\\-").replace(/\+/g,"\\+").replace(/\*/g,"\\*").replace(/\%/g,"\\&").replace(/\&/g,"\\%").replace(/\(/g,"\\(").replace(/\)/g,"\\)"),"g"),Number(eval(calc)))
+            })
+        }
+        function clear1(){
+            newCode.match(clearV).forEach(hihi => {
+                var b = hihi.split("[\"").reverse()[0].split("\"]").join(""),
+                    a = hihi.split("[\"")[0]
+                newCode = newCode.replace(hihi, a + "." + b)
             })
         }
         var z = 0;
         setInterval(() => {
             if (z == 0) {
                 if (newCode.match(clearV)) {
-                    newCode.match(clearV).forEach(hihi => {
-                        var b = hihi.split("[\"").reverse()[0].split("\"]").join(""),
-                            a = hihi.split("[\"")[0]
-                        newCode = newCode.replace(hihi, a + "." + b)
-                    })
+                    clear1()
                 } else {
                     z = 1
-                    document.getElementById("output").value = bf(newCode, {
-                        indent_size: 2,
-                        space_in_empty_paren: true
-                    })
+                    replaceVal(newCode)
+                    var y=0;
+                    setInterval(() => {
+                        if (y == 0) {
+                            if (newCode.match(clearV)) {
+                                clear1()
+                            } else {
+                                y = 1
+                                replaceVal(newCode)
+                                document.getElementById("output").value = bf(newCode, {
+                                    indent_size: 2,
+                                    space_in_empty_paren: true
+                                })
+                            }
+                        }
+                    });
                 }
             }
         });
