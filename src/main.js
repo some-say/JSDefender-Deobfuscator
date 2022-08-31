@@ -55,7 +55,7 @@ const fs = require("fs"),
                 return false;
             }
         }(code)
-        var numberReg = /((0x|0X)[0-9A-Fa-f]*)|((0o|0O)[0-7]*)/g
+        var numberReg = /(((0x|0X)[0-9A-Fa-f]*)|((0o|0O)[0-7]*)|((0b|0B)[01]*))/g
         if(newCode.match(numberReg)){
             newCode.match(numberReg).forEach(int => {
                 if(Number(int)){
@@ -66,7 +66,7 @@ const fs = require("fs"),
         var calcReg = /(\([0-9]* [-+/*^&%] [0-9]*\))/g
         if(newCode.match(calcReg)){
             newCode.match(calcReg).forEach(calc => {
-                newCode = newCode.replace(new RegExp(calc.replace(/\^/g,"\\^").replace(/\-/g,"\\-").replace(/\+/g,"\\+").replace(/\*/g,"\\*").replace(/\%/g,"\\&").replace(/\&/g,"\\%").replace(/\(/g,"\\(").replace(/\)/g,"\\)"),"g"),Number(eval(calc)))
+                newCode = newCode.replace(new RegExp(calc.replace(/\^/g,"\\^").replace(/\-/g,"\\-").replace(/\+/g,"\\+").replace(/\*/g,"\\*").replace(/\%/g,"\\%").replace(/\&/g,"\\&").replace(/\(/g,"\\(").replace(/\)/g,"\\)"),"g"),Number(eval(calc)))
             })
         }
         function clear1(){
