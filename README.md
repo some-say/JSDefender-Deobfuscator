@@ -13,7 +13,7 @@
 * ligne 5 : ma fonction appelée
 * ligne 6 : mon réel programme
 
-Si on regarde la ligne 5 contenant le réel programme, on peut voir que de nouvelles valeurs sont apparues comme `Kqsib.C01db(0)` et `Kqsib.uQRdb(1)`, si on essaie de les afficher sur la console on aura : </br>
+Si on regarde la ligne 6 contenant le réel programme, on peut voir que de nouvelles valeurs sont apparues comme `Kqsib.C01db(0)` et `Kqsib.uQRdb(1)`, si on essaie de les afficher sur la console on aura : </br>
 Kqsib.C01db(0) = "log"</br>
 Kqsib.uQRdb(1) = "Hello World"</br>
 ces valeurs sont assignées dans le programme exécuté dans l'eval, on va donc remplacer eval par console.log pour voir réellement ce qu'il y a </br>
