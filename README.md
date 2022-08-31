@@ -10,7 +10,8 @@
 * ligne 2 : création d'une fonction 
 * ligne 3 : création d'une constante utilisée dans la partie exécutée dans la ligne en dessous
 * ligne 4 : un code exécuté contenant un programme chiffré (que je n'ai pas montré sur le screen car il était trop gros)
-* ligne 5 : mon réel programme
+* ligne 5 : ma fonction appelée
+* ligne 6 : mon réel programme
 
 Si on regarde la ligne 5 contenant le réel programme, on peut voir que de nouvelles valeurs sont apparues comme `Kqsib.C01db(0)` et `Kqsib.uQRdb(1)`, si on essaie de les afficher sur la console on aura : </br>
 Kqsib.C01db(0) = "log"</br>

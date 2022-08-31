@@ -36,21 +36,24 @@ const fs = require("fs"),
             newCode = newCode.replace(new RegExp(str, "gi"), varN["" + str]);
         })
         function replaceVal(obfuscated){
-            if(obfuscated.match(val))
-            obfuscated.match(val).forEach(value => {
-                if (value.startsWith(name)) {
-                    allF.push("\"" + value + "\"")
-                }
-            })
-            allV = eval(line[0] + "\n" + funcA + "var xD = {};\nvar allF = [" + allF + "];\nallF.forEach(val => {xD[\"\"+val]=eval(val)});\nxD")
-            allF.forEach(v => {
-                if (typeof allV["" + v] == "number" | "boolean") {
-                    newCode = newCode.replace(v, allV["" + v])
-                } else if (typeof allV["" + v] == "string") {
-                    var newVal = allV["" + v].replace(/\\/g, "\\\\").replace(/\"/g, "\\\"").replace(/\r/gi, "").split("\n").join("\\n")
-                    newCode = newCode.replace(v, '"' + newVal + '"')
-                }
-            })
+            if(obfuscated.match(val)){
+                obfuscated.match(val).forEach(value => {
+                    if (value.startsWith(name)) {
+                        allF.push("\"" + value + "\"")
+                    }
+                })
+                allV = eval(line[0] + "\n" + funcA + "var xD = {};\nvar allF = [" + allF + "];\nallF.forEach(val => {xD[\"\"+val]=eval(val)});\nxD")
+                allF.forEach(v => {
+                    if (typeof allV["" + v] == "number" | "boolean") {
+                        newCode = newCode.replace(v, allV["" + v])
+                    } else if (typeof allV["" + v] == "string") {
+                        var newVal = allV["" + v].replace(/\\/g, "\\\\").replace(/\"/g, "\\\"").replace(/\r/gi, "").split("\n").join("\\n")
+                        newCode = newCode.replace(v, '"' + newVal + '"')
+                    }
+                })
+            }else{
+                return false;
+            }
         }(code)
         var numberReg = /((0x|0X)[0-9A-Fa-f]*)|((0o|0O)[0-7]*)/g
         if(newCode.match(numberReg)){
