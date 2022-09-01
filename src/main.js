@@ -36,7 +36,6 @@ const fs = require("fs"),
         varF.forEach(str => {
             newCode = newCode.replace(new RegExp(str, "gi"), varN["" + str]);
         })
-
         function replaceVal(obfuscated) {
             if (obfuscated.match(val)) {
                 obfuscated.match(val).forEach(value => {
