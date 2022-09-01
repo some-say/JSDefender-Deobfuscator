@@ -1,7 +1,7 @@
 const fs = require("fs"),
     bf = require("js-beautify"),
-    champiName = require("../name.json")
-deobfuscate = (input) => {
+    champiName = require("../name.json"),
+    deobfuscate = (input) => {
         var code = bf(input, {
                 indent_size: 2,
                 space_in_empty_paren: true
