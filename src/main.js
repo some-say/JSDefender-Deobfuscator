@@ -1,13 +1,14 @@
 const fs = require("fs"),
     bf = require("js-beautify"),
     champiName = require("../name.json")
-    deobfuscate = (input) => {
+deobfuscate = (input) => {
         var code = bf(input, {
                 indent_size: 2,
                 space_in_empty_paren: true
             }),
             line = code.replace(/\r/gi, "").split("\n");
-        for(let i=0;i<line.length;i++) if(line[i].startsWith("//")) line.splice(i,1)
+        for (let i = 0; i < line.length; i++)
+            if (line[i].startsWith("//")) line.splice(i, 1)
         var name = line[0].split("let ").reverse().join("").split(";").reverse().join(""),
             funcA = line[1] + "\n" + line[2] + "\n" + line[3] + "\n" + line[4] + "\n",
             val = /([A-Za-z0-9]*\.[A-Za-z0-9]*\([0-9]*\))/g,
@@ -35,8 +36,9 @@ const fs = require("fs"),
         varF.forEach(str => {
             newCode = newCode.replace(new RegExp(str, "gi"), varN["" + str]);
         })
-        function replaceVal(obfuscated){
-            if(obfuscated.match(val)){
+
+        function replaceVal(obfuscated) {
+            if (obfuscated.match(val)) {
                 obfuscated.match(val).forEach(value => {
                     if (value.startsWith(name)) {
                         allF.push("\"" + value + "\"")
@@ -51,25 +53,26 @@ const fs = require("fs"),
                         newCode = newCode.replace(v, '"' + newVal + '"')
                     }
                 })
-            }else{
+            } else {
                 return false;
             }
         }(code)
         var numberReg = /(((0x|0X)[0-9A-Fa-f]*)|((0o|0O)[0-7]*)|((0b|0B)[01]*))/g
-        if(newCode.match(numberReg)){
+        if (newCode.match(numberReg)) {
             newCode.match(numberReg).forEach(int => {
-                if(Number(int)){
-                    newCode = newCode.replace(new RegExp(int,"g"),Number(int))
+                if (Number(int)) {
+                    newCode = newCode.replace(new RegExp(int, "g"), Number(int))
                 }
             })
         }
         var calcReg = /(\([0-9]* [-+/*^&%] [0-9]*\))/g
-        if(newCode.match(calcReg)){
+        if (newCode.match(calcReg)) {
             newCode.match(calcReg).forEach(calc => {
-                newCode = newCode.replace(new RegExp(calc.replace(/\^/g,"\\^").replace(/\-/g,"\\-").replace(/\+/g,"\\+").replace(/\*/g,"\\*").replace(/\%/g,"\\%").replace(/\&/g,"\\&").replace(/\(/g,"\\(").replace(/\)/g,"\\)"),"g"),Number(eval(calc)))
+                newCode = newCode.replace(new RegExp(calc.replace(/\^/g, "\\^").replace(/\-/g, "\\-").replace(/\+/g, "\\+").replace(/\*/g, "\\*").replace(/\%/g, "\\%").replace(/\&/g, "\\&").replace(/\(/g, "\\(").replace(/\)/g, "\\)"), "g"), Number(eval(calc)))
             })
         }
-        function clear1(){
+
+        function clear1() {
             newCode.match(clearV).forEach(hihi => {
                 var b = hihi.split("[\"").reverse()[0].split("\"]").join(""),
                     a = hihi.split("[\"")[0]
@@ -84,7 +87,7 @@ const fs = require("fs"),
                 } else {
                     z = 1
                     replaceVal(newCode)
-                    var y=0;
+                    var y = 0;
                     setInterval(() => {
                         if (y == 0) {
                             if (newCode.match(clearV)) {
