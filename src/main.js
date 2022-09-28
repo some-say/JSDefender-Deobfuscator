@@ -17,25 +17,15 @@ const fs = require("fs"),
             allF = [];
         delete line[0], delete line[1], delete line[2], delete line[3], delete line[4];
         var newCode = line.join("\n"),
-            varN = {},
-            varF = [],
-            varT = "",
-            varC = 0;
-        newCode.split("").forEach(char => {
-            var byte = char.charCodeAt()
-            if (0x15E0 < byte && byte < 0x1770 || 0x2AF8 < byte && byte < 0x2C88 || 0x2C88 < byte && byte < 0x2E18) {
-                varT += char;
-                if (varT.length == 4) {
-                    varN["" + varT] = champiName[varC]
-                    varF.push(varT)
-                    varT = ""
+            varC = 0,
+            varN = hihi => {
+                require('shift-refactor').refactor(newCode)(hihi)('BindingIdentifier').map(node => node.name).forEach(str => {
+                    newCode = newCode.replace(new RegExp(str, "gi"), champiName[varC]);
                     varC++
-                }
+                })
             }
-        })
-        varF.forEach(str => {
-            newCode = newCode.replace(new RegExp(str, "gi"), varN["" + str]);
-        })
+        varN('FunctionDeclaration'),varN('VariableDeclarationStatement');
+        newCode = newCode.replace(/\!\!\[\]/g,"true").replace(/\!\!\[\]/g,"false")
         function replaceVal(obfuscated) {
             if (obfuscated.match(val)) {
                 obfuscated.match(val).forEach(value => {
@@ -70,7 +60,6 @@ const fs = require("fs"),
                 newCode = newCode.replace(new RegExp(calc.replace(/\^/g, "\\^").replace(/\-/g, "\\-").replace(/\+/g, "\\+").replace(/\*/g, "\\*").replace(/\%/g, "\\%").replace(/\&/g, "\\&").replace(/\(/g, "\\(").replace(/\)/g, "\\)"), "g"), Number(eval(calc)))
             })
         }
-
         function clear1() {
             newCode.match(clearV).forEach(hihi => {
                 var b = hihi.split("[\"").reverse()[0].split("\"]").join(""),
@@ -94,6 +83,9 @@ const fs = require("fs"),
                             } else {
                                 y = 1
                                 replaceVal(newCode)
+                                require('shift-refactor').refactor(newCode)('LiteralStringExpression').codegen().forEach(str => {
+                                    newCode = newCode.replace("${"+str+"}",str.replace(/\`/g,"\\`").replace(/\\\"/g,"\"").replace("\"","").split("").reverse().join("").replace("\"","").split("").reverse().join(""));
+                                })
                                 document.getElementById("output").value = bf(newCode, {
                                     indent_size: 2,
                                     space_in_empty_paren: true
