@@ -1,10 +1,10 @@
 # JSDefender Deobfuscator
 ### Un simple algorithme permettant de déobfusquer du code obfusqué avec [JSDefender](https://www.preemptive.com/products/jsdefender/)
-![image](https://cdn.discordapp.com/attachments/863482336612319272/1014241854801313894/unknown.png)
+![image](https://cdn.discordapp.com/attachments/1025769112221270050/1040394825561808896/image.png)
 
 ### Comment fonctionne l'obfuscateur ? 
 
-![image](https://cdn.discordapp.com/attachments/1025769112221270050/1040394825561808896/image.png)
+![image](https://cdn.discordapp.com/attachments/1013995486883094590/1014247735307804692/unknown.png)
 
 * ligne 1 : création d'une variable du nom de Kqsib sans lui assigner de valeurs
 * ligne 2 : création d'une fonction 
