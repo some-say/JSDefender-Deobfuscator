@@ -12,6 +12,7 @@ const createWindow = () => {
         icon: __dirname + "\\img\\logo_javascript-300x300-2370592634.png",
         show: !0,
         autoHideMenuBar: !0,
+        resizable: !1,
         webPreferences: {
             nodeIntegration: !0,
             contextIsolation: !1,

@@ -8,22 +8,34 @@ body{
 #button:focus{
     outline:none;
 }
+h1{
+    color: black;
+}
+textarea{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    resize: none;
+}
+textarea::-webkit-scrollbar{
+    width: 1em;
+}
+textarea::-webkit-scrollbar-thumb{
+  background-color: rgb(0, 0, 0);
+  outline: 1px solid transparent;
+  border-radius:10px
+}
+::placeholder {
+    color:rgb(0, 0, 0);
+    opacity: 0.5;
+}
 #input,
 #output{
     background-color: rgba(0, 0, 0, 0.297);
-    border-radius:20px;
-    color: white;
-}
-textarea::-webkit-scrollbar {
-    width: 1em;
-}
-textarea::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
+    border-radius:10px;
+    color: rgb(0, 0, 0);
 }
 #button{
     background-color: rgba(0, 0, 0, 0.297);
-    color: white;
+    color: rgb(0, 0, 0);
     border-radius: 5px;
     margin-top: 1.5%;
     margin-left: 1.5%;
