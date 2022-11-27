@@ -176,6 +176,13 @@ Et si on met le code en clair :
 
 Et voici le programme permettant d'assigner toutes les valeurs :))) 
 
-### Comment fonctionne le deobfuscateur ?
+### Comment fonctionne le déobfuscateur ?
 
 Le déobfuscateur lui fonctionne sur de l'analyse dynamique, il remove le programme de base (au cas où il y aurait un malware) et garde seulement le programme chiffré, il eval le programme chiffré et get toutes les valeurs, une fois toutes les valeurs récupérées il les remet à leurs places... ça suffit pour déobfusquer le programme et le reconstituer presque parfaitement ^^ 
+
+### Comment lancer JSDefender-Deobfuscator ? 
+
+```sh
+$ npm install electron -g
+$ electron .
+``` 
