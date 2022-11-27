@@ -176,7 +176,7 @@ And if you put the code in plain text :
 
 And here is the program to assign all the values :))) 
 
-### Comment fonctionne le déobfuscateur ?
+### How does the deobfuscator work?
 
 The deobfuscator works on dynamic analysis, it removes the basic program (in case there is malware) and keeps only the encrypted program, it evaluates the encrypted program and gets all the values, once all the values are recovered it puts them back in their places... that's enough to deobfuscate the program and reconstruct it almost perfectly ^^ 
 
