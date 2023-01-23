@@ -26,7 +26,7 @@ const fs = require("fs"),
                     })
                 }
             varN('FunctionDeclaration'),varN('VariableDeclarationStatement');
-            newCode = newCode.replace(/\!\!\[\]/g,"true").replace(/\!\!\[\]/g,"false")
+            newCode = newCode.replace(/\!\!\[\]/g,"true").replace(/\!\[\]/g,"false")
             function replaceVal(obfuscated) {
                 if (obfuscated.match(val)) {
                     obfuscated.match(val).forEach(value => {
